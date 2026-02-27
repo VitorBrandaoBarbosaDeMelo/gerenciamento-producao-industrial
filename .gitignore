@@ -1,0 +1,37 @@
+# Backend - Java/Maven
+backend/target/
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# Backend - IDE
+backend/.idea/
+backend/*.iml
+backend/.vscode/
+backend/.settings/
+backend/.classpath
+backend/.project
+
+# Frontend - Node/Vue
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.DS_Store
+
+# Frontend - IDE
+frontend/.idea/
+frontend/.vscode/
+frontend/*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
