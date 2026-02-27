@@ -1,204 +1,138 @@
-# 🏭 Production Optimizer
+# Sistema Otimizador de Produção
 
-Sistema Full Stack para gerenciamento de insumos e otimização de produção industrial.
+Aplicação full stack para gestão de matérias-primas, cadastro de produtos e sugestão de produção com foco em retorno financeiro.
 
-## 📋 Descrição
+## Visão Geral
 
-Aplicação desenvolvida para auxiliar fábricas no controle de estoque de matérias-primas e na tomada de decisão sobre quais produtos fabricar para maximizar o retorno financeiro.
+O sistema permite:
+- cadastrar e manter matérias-primas;
+- cadastrar produtos e suas composições;
+- executar um cálculo de otimização de produção com base no estoque atual;
+- persistir os dados localmente em banco H2 baseado em arquivo.
 
-## 🚀 Tecnologias Utilizadas
+## Stack Tecnológica
 
-### Back-end
-- **Java 17**
-- **Spring Boot 3.2.2**
-- **Spring Data JPA**
-- **H2 Database** (banco em memória)
-- **Maven**
-- **Lombok**
-- **JUnit 5** (testes unitários)
+### Backend
+- Java 21
+- Spring Boot 3.2.2
+- Spring Data JPA
+- H2 Database (modo arquivo)
+- Maven
+- JUnit 5 + Mockito
 
-### Front-end
-- **Vue.js 3**
-- **Vite**
-- **Axios**
+### Frontend
+- Vue 3
+- Vite
+- Axios
 
-## 📁 Estrutura do Projeto
+## Arquitetura
 
-```
-├── backend/                 # Aplicação Spring Boot
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/com/factory/
-│   │   │   │   ├── model/           # Entidades JPA
-│   │   │   │   ├── repository/      # Repositórios
-│   │   │   │   ├── service/         # Lógica de negócio
-│   │   │   │   ├── controller/      # Endpoints REST
-│   │   │   │   └── dto/             # Data Transfer Objects
-│   │   │   └── resources/
-│   │   │       └── application.properties
-│   │   └── test/                    # Testes unitários
-│   └── pom.xml
-│
-└── frontend/                # Aplicação Vue.js
-    ├── src/
-    │   ├── components/      # Componentes Vue
-    │   ├── services/        # Serviços da API
-    │   ├── App.vue
-    │   └── main.js
-    ├── index.html
-    ├── package.json
-    └── vite.config.js
-```
+Projeto organizado em camadas:
+- `controller`: endpoints REST;
+- `service`: regras de negócio;
+- `repository`: acesso a dados;
+- `model` e `dto`: entidades e contratos de API.
 
-## ⚙️ Funcionalidades
+## Funcionalidades
 
-### ✅ CRUD de Matérias-Primas
-- Cadastrar, editar, listar e excluir matérias-primas
-- Controle de estoque disponível
+### Matérias-primas
+- criar, listar, editar e excluir;
+- controle de estoque por item.
 
-### ✅ CRUD de Produtos
-- Cadastrar, editar, listar e excluir produtos
-- Definir composição (quais matérias-primas e quantidades)
-- Informar valor de venda
+### Produtos
+- criar, listar, editar e excluir;
+- composição por matérias-primas e quantidades;
+- definição de valor de venda.
 
-### ✅ Otimização de Produção
-- Algoritmo que analisa o estoque atual
-- Sugere quais produtos fabricar para **maximizar o valor total de vendas**
-- Prioriza produtos com maior retorno financeiro
-- Resolve conflitos quando produtos disputam a mesma matéria-prima
+### Otimização
+- cálculo de sugestão de produção com abordagem gulosa (greedy);
+- priorização por valor de produto;
+- uso do estoque disponível como restrição;
+- total de valor potencial estimado.
 
-## 🔧 Como Rodar o Projeto
+## Persistência de Dados
 
-### Pré-requisitos
-- **Java 17** ou superior
-- **Maven 3.6+**
-- **Node.js 18+** e **npm**
+O projeto está configurado com persistência em arquivo local:
+- `spring.datasource.url=jdbc:h2:file:./data/productiondb`
+- arquivo gerado: `backend/data/productiondb.mv.db`
 
-### 1️⃣ Back-end (Spring Boot)
+Com isso, os dados permanecem após reiniciar backend, frontend ou VS Code.
+
+## Pré-requisitos
+
+- Java 21
+- Maven 3.9+
+- Node.js 20+ (LTS recomendado)
+- npm 10+
+
+## Como Executar
+
+### 1) Subir backend
 
 ```bash
-# Navegue até a pasta backend
 cd backend
-
-# Execute o projeto com Maven
 mvn spring-boot:run
 ```
 
-O servidor estará disponível em: `http://localhost:8080`
+Backend: `http://localhost:8080`
 
-**Console H2 Database**: `http://localhost:8080/h2-console`
-- JDBC URL: `jdbc:h2:mem:productiondb`
-- Username: `sa`
-- Password: *(deixar em branco)*
-
-### 2️⃣ Executar Testes Unitários
+### 2) Subir frontend
 
 ```bash
-# Na pasta backend
-mvn test
-```
-
-### 3️⃣ Front-end (Vue.js)
-
-```bash
-# Navegue até a pasta frontend
 cd frontend
-
-# Instale as dependências
 npm install
-
-# Execute o servidor de desenvolvimento
 npm run dev
 ```
 
-O front-end estará disponível em: `http://localhost:5173`
+Frontend: `http://localhost:5173`
 
-## 📖 Como Usar
+### 3) Rodar testes backend
 
-### 1. Cadastrar Matérias-Primas
-- Acesse a aba "Matérias-Primas"
-- Clique em "Nova Matéria-Prima"
-- Preencha código, nome e quantidade em estoque
-- Salve
+```bash
+cd backend
+mvn test
+```
 
-### 2. Cadastrar Produtos
-- Acesse a aba "Produtos"
-- Clique em "Novo Produto"
-- Preencha código, nome e valor
-- Adicione a composição (matérias-primas necessárias)
-- Salve
+## Console H2
 
-### 3. Otimizar Produção
-- Acesse a aba "Otimização"
-- Clique em "Calcular Otimização"
-- Visualize as sugestões de produção ordenadas por prioridade
-- Veja o valor total potencial de vendas
+URL: `http://localhost:8080/h2-console`
 
-## 🎯 Algoritmo de Otimização
+Configuração para login:
+- JDBC URL: `jdbc:h2:file:./data/productiondb`
+- User Name: `sa`
+- Password: *(em branco)*
 
-O algoritmo implementado utiliza uma abordagem **Greedy (gulosa)**:
+## Endpoints Principais
 
-1. **Ordena produtos por valor** (maior valor primeiro)
-2. **Calcula quantidade máxima** que pode ser produzida com estoque disponível
-3. **Aloca recursos** para o produto de maior valor
-4. **Atualiza estoque virtual** e repete para próximo produto
-5. **Retorna sugestões** priorizando máximo retorno financeiro
-
-### Exemplo:
-- **Produto A**: Valor R$ 100, usa 10kg de Aço
-- **Produto B**: Valor R$ 80, usa 5kg de Aço
-- **Estoque**: 50kg de Aço
-
-**Resultado**: Prioriza Produto A (5 unidades = R$ 500) em vez de Produto B (10 unidades = R$ 800)... 
-*Ops! Na verdade, o algoritmo escolheria Produto A primeiro, mas só produziria até esgotar o estoque, então produziria 5 unidades de A (R$ 500). Como é greedy por valor unitário, essa é a estratégia implementada.*
-
-## 🧪 Testes
-
-O projeto inclui testes unitários para:
-- ✅ **MateriaPrimaService**: CRUD completo
-- ✅ **ProducaoService**: Lógica de otimização
-
-Execute com: `mvn test`
-
-## 🏗️ Arquitetura e Clean Code
-
-### Princípios Aplicados:
-- **Separação de responsabilidades**: Controllers, Services, Repositories
-- **DTOs** para transferência de dados
-- **Validações** com Bean Validation
-- **Injeção de dependências** com Spring
-- **Código limpo e legível** com nomes descritivos
-- **Comentários explicativos** nas partes críticas
-
-### Padrões:
-- **Repository Pattern**
-- **Service Layer Pattern**
-- **DTO Pattern**
-- **RESTful API**
-
-## 🌐 API Endpoints
-
-### Matérias-Primas
-- `GET /api/materias-primas` - Listar todas
-- `GET /api/materias-primas/{id}` - Buscar por ID
-- `POST /api/materias-primas` - Criar nova
-- `PUT /api/materias-primas/{id}` - Atualizar
-- `DELETE /api/materias-primas/{id}` - Excluir
+### Matérias-primas
+- `GET /api/materias-primas`
+- `GET /api/materias-primas/{id}`
+- `POST /api/materias-primas`
+- `PUT /api/materias-primas/{id}`
+- `DELETE /api/materias-primas/{id}`
 
 ### Produtos
-- `GET /api/produtos` - Listar todos
-- `GET /api/produtos/{id}` - Buscar por ID
-- `POST /api/produtos` - Criar novo
-- `PUT /api/produtos/{id}` - Atualizar
-- `DELETE /api/produtos/{id}` - Excluir
+- `GET /api/produtos`
+- `GET /api/produtos/{id}`
+- `POST /api/produtos`
+- `PUT /api/produtos/{id}`
+- `DELETE /api/produtos/{id}`
 
 ### Otimização
-- `GET /api/producao/otimizar` - Calcular otimização de produção
+- `GET /api/producao/otimizar`
 
-## 👨‍💻 Autor
+## Troubleshooting
 
-Desenvolvido como teste técnico para vaga Full Stack - P&D
+- **Porta 8080 em uso**: encerrar processo da porta antes de subir backend.
+- **`npm` não reconhecido**: reiniciar terminal/VS Code após instalar Node.js.
+- **Erro de conexão no frontend**: confirmar backend ativo em `http://localhost:8080`.
 
-## 📄 Licença
+## Status do Projeto
 
-Este projeto é de código aberto para fins educacionais e de avaliação técnica.
+- Upgrade de runtime Java realizado para Java 21.
+- Frontend atualizado com layout moderno e conteúdo em português.
+- Persistência local habilitada via H2 em arquivo.
+
+## Licença
+
+Uso educacional e de avaliação técnica.
