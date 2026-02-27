@@ -80,7 +80,6 @@ class MateriaPrimaServiceTest {
     void update_DeveAtualizarMateriaPrima() {
         MateriaPrima updated = new MateriaPrima(1L, "MP001", "Aço Inox", 1500.0);
         when(repository.findById(1L)).thenReturn(Optional.of(materiaPrima));
-        when(repository.existsByCodigo("MP001")).thenReturn(false);
         when(repository.save(any(MateriaPrima.class))).thenReturn(updated);
         
         MateriaPrima result = service.update(1L, updated);
