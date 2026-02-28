@@ -43,6 +43,9 @@ public class MateriaPrimaService {
         existing.setCodigo(materiaPrima.getCodigo());
         existing.setNome(materiaPrima.getNome());
         existing.setQuantidadeEstoque(materiaPrima.getQuantidadeEstoque());
+        existing.setUnidadeMedida(materiaPrima.getUnidadeMedida());
+        existing.setPesoPorUnidade(materiaPrima.getPesoPorUnidade());
+        existing.setValorUnidade(materiaPrima.getValorUnidade());
         
         return repository.save(existing);
     }
