@@ -1,0 +1,15 @@
+{
+  "codigo": "PROD002",
+  "nome": "Mesa",
+  "valor": 450.00,
+  "composicao": [
+    {
+      "materiaPrimaId": 1,
+      "quantidade": 10.0
+    },
+    {
+      "materiaPrimaId": 2,
+      "quantidade": 20.0
+    }
+  ]
+}
