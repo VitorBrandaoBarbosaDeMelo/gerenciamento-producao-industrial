@@ -12,8 +12,8 @@
           <th>Código</th>
           <th>Nome</th>
           <th>Estoque</th>
-          <th>Unidade de Medida</th>
           <th>Peso por unidade</th>
+          <th>Unidade de Medida</th>
           <th>Valor da Unidade</th>
           <th>Ações</th>
         </tr>
@@ -23,8 +23,8 @@
           <td>{{ mp.codigo }}</td>
           <td>{{ mp.nome }}</td>
           <td>{{ mp.quantidadeEstoque }}</td>
-          <td>{{ mp.unidadeMedida }}</td>
           <td>{{ mp.pesoPorUnidade || '-' }}</td>
+          <td>{{ mp.unidadeMedida }}</td>
           <td>{{ mp.valorUnidade ? `R$ ${mp.valorUnidade.toFixed(2)}` : '-' }}</td>
           <td class="acoes-cell">
             <button @click="openEditModal(mp)" class="btn btn-warning">✏️ Editar</button>
