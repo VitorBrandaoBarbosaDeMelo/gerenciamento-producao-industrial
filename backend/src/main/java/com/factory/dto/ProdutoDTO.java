@@ -14,5 +14,7 @@ public class ProdutoDTO {
     private String codigo;
     private String nome;
     private Double valor;
+    private Double margemLucro;
+    private Double custoTotal;
     private List<ComposicaoDTO> composicao;
 }

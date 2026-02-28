@@ -37,12 +37,21 @@ Projeto organizado em camadas:
 
 ### Matérias-primas
 - criar, listar, editar e excluir;
-- controle de estoque por item.
+- controle de estoque por item;
+- **unidade de medida** (10 opções: Unidades, Quilogramas, Gramas, Litros, Metros, Metros², Metros³, Barras, Chapas, Galões);
+- **peso por unidade** (para controle logístico);
+- **valor unitário** (custo de aquisição);
+- interface com tabela centralizada.
 
 ### Produtos
 - criar, listar, editar e excluir;
 - composição por matérias-primas e quantidades;
-- definição de valor de venda.
+- **margem de lucro configurável** (padrão 50%);
+- **cálculo automático do valor de venda** baseado em:
+  - custo total das matérias-primas (quantidade × valor unitário)
+  - margem de lucro aplicada sobre o custo
+  - fórmula: `Valor = Custo Total × (1 + Margem/100)`
+- visualização detalhada: Custo Total, Margem de Lucro e Valor de Venda.
 
 ### Otimização
 - cálculo de sugestão de produção com abordagem gulosa (greedy);
@@ -129,9 +138,14 @@ Configuração para login:
 
 ## Status do Projeto
 
-- Upgrade de runtime Java realizado para Java 21.
-- Frontend atualizado com layout moderno e conteúdo em português.
-- Persistência local habilitada via H2 em arquivo.
+- ✅ Upgrade de runtime Java realizado para Java 21.
+- ✅ Frontend atualizado com layout moderno e conteúdo em português.
+- ✅ Persistência local habilitada via H2 em arquivo.
+- ✅ Sistema de precificação automática implementado (28/02/2026):
+  - Matérias-primas com unidade de medida, peso e valor unitário
+  - Produtos com margem de lucro e cálculo automático de preço
+  - Interface aprimorada com visualização de custos e margens
+- ✅ Testes unitários atualizados e validados.
 
 ## Licença
 

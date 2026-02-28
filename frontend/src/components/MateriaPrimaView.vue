@@ -6,12 +6,15 @@
     <div v-if="error" class="error">{{ error }}</div>
     <div v-if="success" class="success">{{ success }}</div>
 
-    <table v-if="materiasPrimas.length > 0">
+    <table class="table-materias-primas" v-if="materiasPrimas.length > 0">
       <thead>
         <tr>
           <th>Código</th>
           <th>Nome</th>
           <th>Estoque</th>
+          <th>Unidade de Medida</th>
+          <th>Peso por unidade</th>
+          <th>Valor da Unidade</th>
           <th>Ações</th>
         </tr>
       </thead>
@@ -20,7 +23,10 @@
           <td>{{ mp.codigo }}</td>
           <td>{{ mp.nome }}</td>
           <td>{{ mp.quantidadeEstoque }}</td>
-          <td>
+          <td>{{ mp.unidadeMedida }}</td>
+          <td>{{ mp.pesoPorUnidade || '-' }}</td>
+          <td>{{ mp.valorUnidade ? `R$ ${mp.valorUnidade.toFixed(2)}` : '-' }}</td>
+          <td class="acoes-cell">
             <button @click="openEditModal(mp)" class="btn btn-warning">✏️ Editar</button>
             <button @click="deleteMp(mp.id)" class="btn btn-danger">🗑️ Excluir</button>
           </td>
@@ -45,6 +51,33 @@
         <div class="form-group">
           <label>Quantidade em Estoque:</label>
           <input v-model="form.quantidadeEstoque" type="number" step="0.01" required>
+        </div>
+
+        <div class="form-group">
+          <label>Unidade de Medida:</label>
+          <select v-model="form.unidadeMedida" required>
+            <option value="">Selecione...</option>
+            <option value="Unidades">Unidades</option>
+            <option value="Quilogramas">Quilogramas</option>
+            <option value="Gramas">Gramas</option>
+            <option value="Litros">Litros</option>
+            <option value="Metros">Metros</option>
+            <option value="Metros²">Metros²</option>
+            <option value="Metros³">Metros³</option>
+            <option value="Barras">Barras</option>
+            <option value="Chapas">Chapas</option>
+            <option value="Galões">Galões</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Peso por unidade.</label>
+          <input v-model="form.pesoPorUnidade" type="number" step="0.001" placeholder="0.000">
+        </div>
+
+        <div class="form-group">
+          <label>Valor da Unidade (R$):</label>
+          <input v-model="form.valorUnidade" type="number" step="0.01" placeholder="0.00">
         </div>
 
         <div class="actions">
@@ -72,7 +105,10 @@ export default {
       id: null,
       codigo: '',
       nome: '',
-      quantidadeEstoque: 0
+      quantidadeEstoque: 0,
+      unidadeMedida: '',
+      pesoPorUnidade: null,
+      valorUnidade: null
     })
 
     const loadData = async () => {
@@ -86,7 +122,7 @@ export default {
 
     const openCreateModal = () => {
       editMode.value = false
-      form.value = { id: null, codigo: '', nome: '', quantidadeEstoque: 0 }
+      form.value = { id: null, codigo: '', nome: '', quantidadeEstoque: 0, unidadeMedida: '', pesoPorUnidade: null, valorUnidade: null }
       showModal.value = true
       error.value = ''
       success.value = ''
@@ -102,7 +138,7 @@ export default {
 
     const closeModal = () => {
       showModal.value = false
-      form.value = { id: null, codigo: '', nome: '', quantidadeEstoque: 0 }
+      form.value = { id: null, codigo: '', nome: '', quantidadeEstoque: 0, unidadeMedida: '', pesoPorUnidade: null, valorUnidade: null }
     }
 
     const save = async () => {
@@ -153,3 +189,16 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.table-materias-primas th,
+.table-materias-primas td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table-materias-primas .acoes-cell {
+  text-align: center;
+  white-space: nowrap;
+}
+</style>

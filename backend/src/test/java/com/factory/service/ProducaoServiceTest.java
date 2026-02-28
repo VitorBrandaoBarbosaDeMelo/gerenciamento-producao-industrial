@@ -39,8 +39,8 @@ class ProducaoServiceTest {
     
     @BeforeEach
     void setUp() {
-        mp1 = new MateriaPrima(1L, "MP001", "Aço", 100.0);
-        mp2 = new MateriaPrima(2L, "MP002", "Plástico", 200.0);
+        mp1 = new MateriaPrima(1L, "MP001", "Aço", 100.0, "Quilogramas", 7.8, 50.0);
+        mp2 = new MateriaPrima(2L, "MP002", "Plástico", 200.0, "Quilogramas", 0.95, 15.0);
         
         produto1 = new Produto(1L, "P001", "Produto A", 50.0, new ArrayList<>());
         Composicao comp1 = new Composicao(1L, produto1, mp1, 10.0);

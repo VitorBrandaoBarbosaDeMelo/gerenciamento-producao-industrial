@@ -11,7 +11,9 @@
         <tr>
           <th>Código</th>
           <th>Nome</th>
-          <th>Valor</th>
+          <th>Custo Total</th>
+          <th>Margem</th>
+          <th>Valor Venda</th>
           <th>Composição</th>
           <th>Ações</th>
         </tr>
@@ -20,6 +22,8 @@
         <tr v-for="produto in produtos" :key="produto.id">
           <td>{{ produto.codigo }}</td>
           <td>{{ produto.nome }}</td>
+          <td>R$ {{ (produto.custoTotal || 0).toFixed(2) }}</td>
+          <td>{{ (produto.margemLucro || 0).toFixed(1) }}%</td>
           <td>R$ {{ produto.valor.toFixed(2) }}</td>
           <td>
             <div v-for="comp in produto.composicao" :key="comp.materiaPrimaId">
@@ -49,8 +53,8 @@
         </div>
 
         <div class="form-group">
-          <label>Valor:</label>
-          <input v-model="form.valor" type="number" step="0.01" required>
+          <label>Margem de Lucro (%):</label>
+          <input v-model.number="form.margemLucro" type="number" step="0.1" @change="calcularValor" placeholder="50">
         </div>
 
         <h4>Composição</h4>
@@ -70,6 +74,13 @@
           <button @click="removeComposicao(index)" class="btn btn-danger">Remover</button>
         </div>
         <button @click="addComposicao" class="btn btn-primary">➕ Adicionar Matéria-Prima</button>
+
+        <div style="background: #f0f0f0; padding: 15px; margin: 15px 0; border-radius: 5px;">
+          <h4>Resumo de Cálculo</h4>
+          <p><strong>Custo Total das Matérias-Primas:</strong> R$ {{ calcularCustoTotal().toFixed(2) }}</p>
+          <p><strong>Margem de Lucro:</strong> {{ (form.margemLucro || 0) }}%</p>
+          <p><strong>Valor de Venda (Automático):</strong> <span style="color: green; font-weight: bold;">R$ {{ calcularValorVenda().toFixed(2) }}</span></p>
+        </div>
 
         <div class="actions">
           <button @click="save" class="btn btn-success">💾 Salvar</button>
@@ -98,6 +109,7 @@ export default {
       codigo: '',
       nome: '',
       valor: 0,
+      margemLucro: 50,
       composicao: []
     })
 
@@ -116,7 +128,7 @@ export default {
 
     const openCreateModal = () => {
       editMode.value = false
-      form.value = { id: null, codigo: '', nome: '', valor: 0, composicao: [] }
+      form.value = { id: null, codigo: '', nome: '', valor: 0, margemLucro: 50, composicao: [] }
       showModal.value = true
       error.value = ''
       success.value = ''
@@ -142,8 +154,29 @@ export default {
       form.value.composicao.splice(index, 1)
     }
 
+    const calcularCustoTotal = () => {
+      return form.value.composicao.reduce((total, comp) => {
+        const mp = materiasPrimas.value.find(m => m.id === comp.materiaPrimaId)
+        if (mp && mp.valorUnidade) {
+          return total + (mp.valorUnidade * comp.quantidade)
+        }
+        return total
+      }, 0)
+    }
+
+    const calcularValorVenda = () => {
+      const custoTotal = calcularCustoTotal()
+      const margem = (form.value.margemLucro || 0) / 100
+      return custoTotal * (1 + margem)
+    }
+
+    const calcularValor = () => {
+      form.value.valor = calcularValorVenda()
+    }
+
     const save = async () => {
       try {
+        calcularValor()
         if (editMode.value) {
           await produtoService.update(form.value.id, form.value)
           success.value = 'Produto atualizado com sucesso!'
@@ -187,6 +220,9 @@ export default {
       closeModal,
       addComposicao,
       removeComposicao,
+      calcularCustoTotal,
+      calcularValorVenda,
+      calcularValor,
       save,
       deleteProduto
     }

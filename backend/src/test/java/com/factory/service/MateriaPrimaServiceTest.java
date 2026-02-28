@@ -30,7 +30,7 @@ class MateriaPrimaServiceTest {
     
     @BeforeEach
     void setUp() {
-        materiaPrima = new MateriaPrima(1L, "MP001", "Aço", 1000.0);
+        materiaPrima = new MateriaPrima(1L, "MP001", "Aço", 1000.0, "Quilogramas", 1.5, 50.0);
     }
     
     @Test
@@ -78,7 +78,7 @@ class MateriaPrimaServiceTest {
     
     @Test
     void update_DeveAtualizarMateriaPrima() {
-        MateriaPrima updated = new MateriaPrima(1L, "MP001", "Aço Inox", 1500.0);
+        MateriaPrima updated = new MateriaPrima(1L, "MP001", "Aço Inox", 1500.0, "Quilogramas", 2.0, 75.0);
         when(repository.findById(1L)).thenReturn(Optional.of(materiaPrima));
         when(repository.save(any(MateriaPrima.class))).thenReturn(updated);
         

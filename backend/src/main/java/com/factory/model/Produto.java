@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,11 @@ public class Produto {
     @Positive(message = "Valor deve ser positivo")
     @Column(nullable = false)
     private Double valor;
+
+    @NotNull(message = "Margem de lucro é obrigatória")
+    @PositiveOrZero(message = "Margem deve ser positiva ou zero")
+    @Column(nullable = false)
+    private Double margemLucro = 50.0;
     
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Composicao> composicao = new ArrayList<>();
@@ -46,5 +52,23 @@ public class Produto {
     public void removeComposicao(Composicao comp) {
         composicao.remove(comp);
         comp.setProduto(null);
+    }
+
+    public Double calcularCustoTotal() {
+        return composicao.stream()
+                .mapToDouble(comp -> comp.getMateriaPrima().getValorUnidade() != null 
+                    ? comp.getMateriaPrima().getValorUnidade() * comp.getQuantidade() 
+                    : 0.0)
+                .sum();
+    }
+
+    public Double calcularValorComMargem() {
+        Double custoTotal = calcularCustoTotal();
+        Double margem = (margemLucro != null ? margemLucro : 0.0) / 100.0;
+        return custoTotal * (1.0 + margem);
+    }
+
+    public void atualizarValorAutomatico() {
+        this.valor = calcularValorComMargem();
     }
 }

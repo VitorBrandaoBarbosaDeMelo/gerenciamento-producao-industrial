@@ -41,7 +41,7 @@ public class ProdutoService {
         Produto produto = new Produto();
         produto.setCodigo(dto.getCodigo());
         produto.setNome(dto.getNome());
-        produto.setValor(dto.getValor());
+        produto.setMargemLucro(dto.getMargemLucro() != null ? dto.getMargemLucro() : 50.0);
         
         if (dto.getComposicao() != null) {
             for (ComposicaoDTO compDTO : dto.getComposicao()) {
@@ -53,6 +53,7 @@ public class ProdutoService {
             }
         }
         
+        produto.atualizarValorAutomatico();
         return toDTO(repository.save(produto));
     }
     
@@ -68,7 +69,7 @@ public class ProdutoService {
         
         produto.setCodigo(dto.getCodigo());
         produto.setNome(dto.getNome());
-        produto.setValor(dto.getValor());
+        produto.setMargemLucro(dto.getMargemLucro() != null ? dto.getMargemLucro() : 50.0);
         
         produto.getComposicao().clear();
         
@@ -82,6 +83,7 @@ public class ProdutoService {
             }
         }
         
+        produto.atualizarValorAutomatico();
         return toDTO(repository.save(produto));
     }
     
@@ -102,12 +104,15 @@ public class ProdutoService {
                 ))
                 .collect(Collectors.toList());
         
-        return new ProdutoDTO(
-                produto.getId(),
-                produto.getCodigo(),
-                produto.getNome(),
-                produto.getValor(),
-                composicao
-        );
+        ProdutoDTO dto = new ProdutoDTO();
+        dto.setId(produto.getId());
+        dto.setCodigo(produto.getCodigo());
+        dto.setNome(produto.getNome());
+        dto.setValor(produto.getValor());
+        dto.setMargemLucro(produto.getMargemLucro());
+        dto.setCustoTotal(produto.calcularCustoTotal());
+        dto.setComposicao(composicao);
+        
+        return dto;
     }
 }
