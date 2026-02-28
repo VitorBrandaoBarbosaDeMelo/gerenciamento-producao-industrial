@@ -9,6 +9,11 @@ backend/mvnw.cmd
 *.ear
 *.log
 
+# Backend - Database H2
+backend/data/
+*.mv.db
+*.trace.db
+
 # Backend - IDE
 backend/.idea/
 backend/*.iml
@@ -35,3 +40,7 @@ Thumbs.db
 # Environment
 .env
 .env.local
+
+# Test files
+test-*.json
+*.ps1
