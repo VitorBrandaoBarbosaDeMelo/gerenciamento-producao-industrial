@@ -39,7 +39,7 @@
     </table>
 
     <div v-if="showModal" class="modal" @click.self="closeModal">
-      <div class="modal-content">
+      <div class="modal-content" @click.stop>
         <h3>{{ editMode ? 'Editar' : 'Novo' }} Produto</h3>
         
         <div class="form-group">
