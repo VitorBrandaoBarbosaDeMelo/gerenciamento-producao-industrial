@@ -12,7 +12,7 @@
           <th>Código</th>
           <th>Nome</th>
           <th>Estoque</th>
-          <th>Peso por unidade</th>
+          <th>Medida</th>
           <th>Unidade de Medida</th>
           <th>Valor da Unidade</th>
           <th>Ações</th>
@@ -71,7 +71,7 @@
         </div>
 
         <div class="form-group">
-          <label>Peso por unidade.</label>
+          <label>Medida:</label>
           <input v-model="form.pesoPorUnidade" type="number" step="0.001" placeholder="0.000">
         </div>
 
