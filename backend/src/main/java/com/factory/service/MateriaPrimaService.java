@@ -3,6 +3,7 @@ package com.factory.service;
 import com.factory.model.MateriaPrima;
 import com.factory.repository.MateriaPrimaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +16,7 @@ public class MateriaPrimaService {
     private final MateriaPrimaRepository repository;
     
     public List<MateriaPrima> findAll() {
-        return repository.findAll();
+        return repository.findAll(Sort.by(Sort.Direction.ASC, "codigo"));
     }
     
     public MateriaPrima findById(Long id) {
@@ -44,7 +45,6 @@ public class MateriaPrimaService {
         existing.setNome(materiaPrima.getNome());
         existing.setQuantidadeEstoque(materiaPrima.getQuantidadeEstoque());
         existing.setUnidadeMedida(materiaPrima.getUnidadeMedida());
-        existing.setPesoPorUnidade(materiaPrima.getPesoPorUnidade());
         existing.setValorUnidade(materiaPrima.getValorUnidade());
         
         return repository.save(existing);

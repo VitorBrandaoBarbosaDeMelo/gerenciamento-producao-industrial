@@ -39,14 +39,14 @@ class ProducaoServiceTest {
     
     @BeforeEach
     void setUp() {
-        mp1 = new MateriaPrima(1L, "MP001", "Aço", 100.0, "Quilogramas", 7.8, 50.0);
-        mp2 = new MateriaPrima(2L, "MP002", "Plástico", 200.0, "Quilogramas", 0.95, 15.0);
+        mp1 = new MateriaPrima(1L, "MP001", "Aço", 100.0, "Quilogramas", 50.0);
+        mp2 = new MateriaPrima(2L, "MP002", "Plástico", 200.0, "Quilogramas", 15.0);
         
-        produto1 = new Produto(1L, "P001", "Produto A", 50.0, new ArrayList<>());
+        produto1 = new Produto(1L, "P001", "Produto A", 50.0, 50.0, new ArrayList<>());
         Composicao comp1 = new Composicao(1L, produto1, mp1, 10.0);
         produto1.addComposicao(comp1);
         
-        produto2 = new Produto(2L, "P002", "Produto B", 30.0, new ArrayList<>());
+        produto2 = new Produto(2L, "P002", "Produto B", 30.0, 50.0, new ArrayList<>());
         Composicao comp2 = new Composicao(2L, produto2, mp2, 20.0);
         produto2.addComposicao(comp2);
     }

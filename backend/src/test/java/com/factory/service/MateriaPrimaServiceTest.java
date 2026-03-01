@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,19 +31,19 @@ class MateriaPrimaServiceTest {
     
     @BeforeEach
     void setUp() {
-        materiaPrima = new MateriaPrima(1L, "MP001", "Aço", 1000.0, "Quilogramas", 1.5, 50.0);
+        materiaPrima = new MateriaPrima(1L, "MP001", "Aço", 1000.0, "Quilogramas", 50.0);
     }
     
     @Test
     void findAll_DeveRetornarListaDeMateriaPrimas() {
         List<MateriaPrima> materiasPrimas = Arrays.asList(materiaPrima);
-        when(repository.findAll()).thenReturn(materiasPrimas);
+        when(repository.findAll(any(Sort.class))).thenReturn(materiasPrimas);
         
         List<MateriaPrima> result = service.findAll();
         
         assertNotNull(result);
         assertEquals(1, result.size());
-        verify(repository, times(1)).findAll();
+        verify(repository, times(1)).findAll(any(Sort.class));
     }
     
     @Test
@@ -78,7 +79,7 @@ class MateriaPrimaServiceTest {
     
     @Test
     void update_DeveAtualizarMateriaPrima() {
-        MateriaPrima updated = new MateriaPrima(1L, "MP001", "Aço Inox", 1500.0, "Quilogramas", 2.0, 75.0);
+        MateriaPrima updated = new MateriaPrima(1L, "MP001", "Aço Inox", 1500.0, "Quilogramas", 75.0);
         when(repository.findById(1L)).thenReturn(Optional.of(materiaPrima));
         when(repository.save(any(MateriaPrima.class))).thenReturn(updated);
         

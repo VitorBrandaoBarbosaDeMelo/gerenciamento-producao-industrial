@@ -39,8 +39,8 @@ Projeto organizado em camadas:
 - criar, listar, editar e excluir;
 - controle de estoque por item;
 - **unidade de medida** (10 opções: Unidades, Quilogramas, Gramas, Litros, Metros, Metros², Metros³, Barras, Chapas, Galões);
-- **peso por unidade** (para controle logístico);
 - **valor unitário** (custo de aquisição);
+- **ordenação alfabética automática por código** (ex: MP-006, MP-007);
 - interface com tabela centralizada.
 
 ### Produtos
@@ -142,9 +142,11 @@ Configuração para login:
 - ✅ Frontend atualizado com layout moderno e conteúdo em português.
 - ✅ Persistência local habilitada via H2 em arquivo.
 - ✅ Sistema de precificação automática implementado (28/02/2026):
-  - Matérias-primas com unidade de medida, peso e valor unitário
+  - Matérias-primas com unidade de medida e valor unitário
   - Produtos com margem de lucro e cálculo automático de preço
   - Interface aprimorada com visualização de custos e margens
+- ✅ Rebrand para SIP (Sistema Integrado de Produção) (01/03/2026).
+- ✅ Ordenação alfabética automática por código implementada (01/03/2026).
 - ✅ Testes unitários atualizados e validados.
 
 ## Licença

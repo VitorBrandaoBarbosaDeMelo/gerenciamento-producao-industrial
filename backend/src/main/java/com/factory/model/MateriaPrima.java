@@ -35,10 +35,6 @@ public class MateriaPrima {
     @NotBlank(message = "Unidade de medida é obrigatória")
     @Column(nullable = false)
     private String unidadeMedida;
-    
-    @PositiveOrZero(message = "Peso deve ser positivo ou zero")
-    @Column(nullable = true)
-    private Double pesoPorUnidade;
 
     @PositiveOrZero(message = "Valor deve ser positivo ou zero")
     @Column(nullable = true)

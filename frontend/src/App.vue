@@ -6,8 +6,8 @@
         <div class="logo-section">
           <div class="logo-icon">🏭</div>
           <div>
-            <h1>Sistema de Produção</h1>
-            <p>Gestão Inteligente de Insumos e Otimização</p>
+            <h1><span class="sip-highlight">SIP</span> (Sistema Integrado de Produção)</h1>
+            <p>Controle de estoque e gerenciamento de insumos</p>
           </div>
         </div>
         <div class="header-stats">
@@ -59,7 +59,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-      <p>© 2026 Sistema de Produção • Desenvolvido com ☕ e Java 21</p>
+      <p>© 2026 SIP (Sistema Integrado de Produção) • Desenvolvido com ☕ e Java 21</p>
     </footer>
   </div>
 </template>
@@ -163,6 +163,15 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 5px;
+}
+
+.sip-highlight {
+  font-size: 1.3em;
+  font-weight: 900;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.05em;
 }
 
 .header-content p {

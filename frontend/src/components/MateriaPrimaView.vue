@@ -12,7 +12,6 @@
           <th>Código</th>
           <th>Nome</th>
           <th>Estoque</th>
-          <th>Medida</th>
           <th>Unidade de Medida</th>
           <th>Valor da Unidade</th>
           <th>Ações</th>
@@ -23,7 +22,6 @@
           <td>{{ mp.codigo }}</td>
           <td>{{ mp.nome }}</td>
           <td>{{ mp.quantidadeEstoque }}</td>
-          <td>{{ mp.pesoPorUnidade || '-' }}</td>
           <td>{{ mp.unidadeMedida }}</td>
           <td>{{ mp.valorUnidade ? `R$ ${mp.valorUnidade.toFixed(2)}` : '-' }}</td>
           <td class="acoes-cell">
@@ -71,11 +69,6 @@
         </div>
 
         <div class="form-group">
-          <label>Medida:</label>
-          <input v-model="form.pesoPorUnidade" type="number" step="0.001" placeholder="0.000">
-        </div>
-
-        <div class="form-group">
           <label>Valor da Unidade (R$):</label>
           <input v-model="form.valorUnidade" type="number" step="0.01" placeholder="0.00">
         </div>
@@ -107,7 +100,6 @@ export default {
       nome: '',
       quantidadeEstoque: 0,
       unidadeMedida: '',
-      pesoPorUnidade: null,
       valorUnidade: null
     })
 
@@ -122,7 +114,7 @@ export default {
 
     const openCreateModal = () => {
       editMode.value = false
-      form.value = { id: null, codigo: '', nome: '', quantidadeEstoque: 0, unidadeMedida: '', pesoPorUnidade: null, valorUnidade: null }
+      form.value = { id: null, codigo: '', nome: '', quantidadeEstoque: 0, unidadeMedida: '', valorUnidade: null }
       showModal.value = true
       error.value = ''
       success.value = ''
@@ -138,7 +130,7 @@ export default {
 
     const closeModal = () => {
       showModal.value = false
-      form.value = { id: null, codigo: '', nome: '', quantidadeEstoque: 0, unidadeMedida: '', pesoPorUnidade: null, valorUnidade: null }
+      form.value = { id: null, codigo: '', nome: '', quantidadeEstoque: 0, unidadeMedida: '', valorUnidade: null }
     }
 
     const save = async () => {
