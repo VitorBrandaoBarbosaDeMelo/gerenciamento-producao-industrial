@@ -4,7 +4,8 @@
 
 ## 🏭 Controle de estoque e gerenciamento de insumos
 
-Sistema completo para gestão de matérias-primas, cadastro de produtos e otimização de produção com foco em retorno financeiro.
+Sistema completo para gestão de matérias-primas, cadastro de produtos e otimização de produção com foco em retorno financeiro.![2026-03-02 02-04-48](https://github.com/user-attachments/assets/37b063aa-5b9f-47d7-afce-fdc9ae742059)
+
 
 </div>
 
